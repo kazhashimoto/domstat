@@ -10,8 +10,8 @@ program
   .showHelpAfterError()
   .option('-n, --sort', 'sort by count')
   .option('-r, --root <selector>', 'specify root element')
-  .option('-i, --images', 'count image files')
   .option('-T, --total', 'show grand total')
+  .option('--list-images', 'list image files');
 
 program.parse(process.argv);
 
@@ -60,7 +60,7 @@ function analyze(file) {
       } else {
         stat.set(tag, {count: 1});
       }
-      if (options.images && tag == 'img') {
+      if (tag == 'img') {
         const src = e.getAttribute('src');
         debug('img src=' + src);
         if (images.has(src)) {
@@ -78,7 +78,7 @@ function analyze(file) {
     } else {
       sortByKey(stat);
     }
-    if (options.images) {
+    if (options.listImages) {
       console.log('');
       if (options.sort) {
         sortByCount(images);
@@ -105,7 +105,7 @@ function analyze(file) {
     console.log('elements: ' + elements.length);
     console.log('subtrees: ' + count);
     console.log('divs / subtree : ' + Number(stat.get('div').count / count).toFixed(3));
-    if (options.images && stat.get('img')) {
+    if (stat.get('img')) {
       const reused = stat.get('img').count - images.size;
       const ratio = Number(100 * reused / stat.get('img').count).toPrecision(4);
       console.log(`image files: ${images.size}, reused ${reused} (${ratio}%)`);
@@ -184,7 +184,7 @@ function showGrandTotal() {
   console.log('elements: ' + Total.elements);
   console.log('subtrees: ' + Total.subtrees);
   console.log('divs / subtree : ' + Number(Total.stat.get('div').count / Total.subtrees).toFixed(3));
-  if (options.images && Total.stat.get('img')) {
+  if (Total.stat.get('img')) {
     const ratio = Number(100 * Total.reused / Total.stat.get('img').count).toPrecision(4);
     console.log(`image files: ${Total.images.size}, reused ${Total.reused} (${ratio}%)`);
   }
