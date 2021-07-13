@@ -21,8 +21,6 @@ if (program.args.length < 2) {
 }
 debug('options', options);
 
-const statTotal = new Map();
-const imagesTotal = new Map();
 const Total = {
   stat: new Map(),
   images: new Map(),
@@ -49,7 +47,7 @@ function analyze(file) {
     if (options.root) {
       root = document.querySelector(options.root);
     }
-    elements = root.querySelectorAll('*');
+    const elements = root.querySelectorAll('*');
 
     const stat = new Map();
     const images = new Map();
