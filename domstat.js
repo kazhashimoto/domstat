@@ -1,10 +1,11 @@
-const { program } = require("commander");
-const jsdom = require("jsdom");
+const { program } = require('commander');
+const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
-const debug = require("debug")("domstat");
+const debug = require('debug')('domstat');
 
 program
-  .name("domstat.js")
+  .name('domstat.js')
+  .version('0.0.1')
   .usage("[options] htmlfile ...")
   .showHelpAfterError()
   .option('-n, --sort', 'sort by count')
